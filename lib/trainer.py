@@ -346,8 +346,11 @@ class Trainer:
 
                     # manipulate cloth prediction: manipulate_results[pred_template_image, pred_mesh_image, pred_group_image, pred_policy_image]
                     manipulate_results = manipulate_cloth_prediction(pred_mesh, true_depth, self.template_info, show=False)
+                    pred_edge = self.template_info['edge_idx']
+
                     save_pred_dir = os.path.join(self.data_dir, key, 'pred')
                     os.makedirs(save_pred_dir, exist_ok=True)
+                    np.savetxt(os.path.join(save_pred_dir, '{}.pred_edge.txt'.format(image_name)), pred_edge, fmt='%d')
                     np.savetxt(os.path.join(save_pred_dir, '{}.pred_mesh.txt'.format(image_name)), pred_mesh)
                     cv.imwrite(os.path.join(save_pred_dir, '{}.pred_mesh.png'.format(image_name)), manipulate_results[1])
                     cv.imwrite(os.path.join(save_pred_dir, '{}.pred_group.png'.format(image_name)), manipulate_results[2])
